@@ -67,6 +67,186 @@ textarea {
   flex-wrap: wrap;
 }
 
+.rack-layout-button {
+  min-height: 36px;
+  border: 1px solid rgba(184, 243, 124, .3);
+  border-radius: 9px;
+  padding: 0 12px;
+  color: #d5edbd;
+  background: rgba(184, 243, 124, .08);
+  font: inherit;
+  font-size: 12px;
+  font-weight: 650;
+  white-space: nowrap;
+}
+
+.rack-layout-button:hover {
+  border-color: rgba(184, 243, 124, .62);
+  background: rgba(184, 243, 124, .15);
+}
+
+.rack-frame {
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+}
+
+.rack-grid.rack-layout-configured {
+  grid-template-columns: repeat(var(--rack-columns, 6), minmax(0, 1fr)) !important;
+  min-width: max(100%, calc(var(--rack-columns, 6) * 54px));
+}
+
+.rack-layout-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: grid;
+  place-items: center;
+  overflow-y: auto;
+  padding: 20px;
+  background: rgba(1, 7, 9, .78);
+  backdrop-filter: blur(6px);
+}
+
+.rack-layout-dialog {
+  width: min(540px, 100%);
+  padding: 22px;
+  border: 1px solid rgba(174, 203, 195, .16);
+  border-radius: 15px;
+  color: #e8f0e9;
+  background: linear-gradient(150deg, #162832, #0d1a20);
+  box-shadow: 0 24px 80px rgba(0, 0, 0, .5);
+}
+
+.rack-layout-heading,
+.rack-layout-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.rack-layout-heading h2 {
+  margin-top: 5px;
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -.035em;
+}
+
+.rack-layout-close {
+  width: 36px;
+  height: 36px;
+  border: 1px solid rgba(174, 203, 195, .12);
+  border-radius: 9px;
+  color: #9bb0a8;
+  font-size: 24px;
+}
+
+.rack-layout-description,
+.rack-layout-note {
+  color: #8da198;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.rack-layout-description { margin: 12px 0 18px; }
+.rack-layout-note { margin-top: 13px; }
+
+.rack-layout-fields {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.rack-layout-fields label {
+  display: grid;
+  gap: 7px;
+  color: #b3c3bb;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.rack-layout-fields input,
+.rack-layout-fields select {
+  width: 100%;
+  min-height: 42px;
+  border: 1px solid rgba(174, 203, 195, .14);
+  border-radius: 8px;
+  padding: 0 11px;
+  outline: none;
+  color: #e5eee8;
+  background: #0a151b;
+  font-size: 13px;
+}
+
+.rack-layout-fields input:focus,
+.rack-layout-fields select:focus {
+  border-color: rgba(184, 243, 124, .6);
+}
+
+.rack-layout-fields .rack-layout-format { grid-column: 1 / -1; }
+
+.rack-layout-preview {
+  margin-top: 16px;
+  padding: 13px;
+  border: 1px solid rgba(174, 203, 195, .1);
+  border-radius: 10px;
+  background: rgba(4, 13, 17, .5);
+}
+
+.rack-layout-preview > div:first-child {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.rack-layout-count { color: #afc2b5; font-size: 11px; }
+.rack-layout-preview-grid { display: grid; gap: 5px; }
+.rack-layout-preview-row { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 5px; }
+
+.rack-layout-preview-chip {
+  display: grid;
+  min-height: 34px;
+  place-items: center;
+  border: 1px solid rgba(184, 243, 124, .18);
+  border-radius: 7px;
+  color: #c8e9a8;
+  background: rgba(184, 243, 124, .07);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 12px;
+}
+
+.rack-layout-error {
+  margin-top: 12px;
+  color: #ff9e9e;
+  font-size: 12px;
+}
+
+.rack-layout-actions {
+  justify-content: flex-end;
+  margin-top: 18px;
+  padding-top: 15px;
+  border-top: 1px solid rgba(174, 203, 195, .1);
+}
+
+.rack-layout-actions button {
+  min-height: 40px;
+  border-radius: 8px;
+  padding: 0 14px;
+  font-size: 12px;
+  font-weight: 650;
+}
+
+.rack-layout-cancel { color: #9aada5; }
+.rack-layout-save { color: #14200e; background: #b8f37c; }
+.rack-layout-save:disabled { cursor: not-allowed; opacity: .55; }
+
+@media (max-width: 600px) {
+  .rack-layout-button { flex: 1 0 100%; }
+  .rack-layout-dialog { padding: 17px; }
+  .rack-layout-preview-row { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+
 @media (max-width: 850px) {
   .page-content {
     padding-right: clamp(16px, 3vw, 25px);

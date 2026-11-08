@@ -181,6 +181,9 @@ void setup() {
         doc["lcdReady"] = lcdMgr.isReady();
         doc["lcdAddress"] = LCD_DEFAULT_ADDR;
         doc["pendingCollectionBox"] = assignmentMgr.getPendingCollectionBox();
+        doc["totalRows"] = sysSettings.totalRows;
+        doc["totalCols"] = sysSettings.totalCols;
+        doc["namingFormat"] = sysSettings.namingFormat;
         String res;
         serializeJson(doc, res);
         request->send(200, "application/json", res);
@@ -243,6 +246,62 @@ void setup() {
         serializeJson(doc, res);
         request->send(200, "application/json", res);
     });
+
+    server.on("/api/compartments/layout", HTTP_GET, [](AsyncWebServerRequest *request) {
+        StateGuard guard;
+        DynamicJsonDocument doc(256);
+        doc["rows"] = sysSettings.totalRows;
+        doc["cols"] = sysSettings.totalCols;
+        doc["namingFormat"] = sysSettings.namingFormat;
+        String res;
+        serializeJson(doc, res);
+        request->send(200, "application/json", res);
+    });
+
+    AsyncCallbackJsonWebHandler *compartmentLayoutHandler = new AsyncCallbackJsonWebHandler("/api/compartments/layout", [](AsyncWebServerRequest *request, JsonVariant &json) {
+        StateGuard guard;
+        JsonObject obj = json.as<JsonObject>();
+        const int rows = obj["rows"] | 0;
+        const int cols = obj["cols"] | 0;
+        const String format = obj["namingFormat"] | "";
+        String error;
+        const SystemSettings previousSettings = sysSettings;
+        sysSettings.totalRows = rows;
+        sysSettings.totalCols = cols;
+        sysSettings.namingFormat = format;
+        if (!StorageManager::saveSettings(sysSettings)) {
+            sysSettings = previousSettings;
+            request->send(500, "application/json", "{\"error\":\"Could not save layout settings to LittleFS.\"}");
+            return;
+        }
+        if (!compartmentMgr.configureLayout(rows, cols, format, sysSettings.prefix, sysSettings.startingNumber, error)) {
+            sysSettings = previousSettings;
+            const bool rollbackSaved = StorageManager::saveSettings(sysSettings);
+            DynamicJsonDocument responseDoc(384);
+            responseDoc["error"] = rollbackSaved ? error : error + " Settings rollback also failed; check LittleFS.";
+            String response;
+            serializeJson(responseDoc, response);
+            const bool invalidInput = rows < 1 || cols < 1 || rows > MAX_COMPARTMENTS || cols > MAX_COMPARTMENTS || rows * cols > MAX_COMPARTMENTS ||
+                                      (format == "ALPHA_NUM" && rows > 26) ||
+                                      (format != "ALPHA_NUM" && format != "THREE_DIGIT");
+            request->send(invalidInput ? 400 : 409, "application/json", response);
+            return;
+        }
+
+        // Active rows use the current compartment label in the API. Completed
+        // history keeps the label that was used when that bag was stored.
+        broadcastWs("COMPARTMENTS_UPDATED", "Rack layout changed");
+        DynamicJsonDocument responseDoc(256);
+        responseDoc["status"] = "saved";
+        responseDoc["rows"] = rows;
+        responseDoc["cols"] = cols;
+        responseDoc["namingFormat"] = format;
+        responseDoc["settingsSaved"] = true;
+        String response;
+        serializeJson(responseDoc, response);
+        request->send(200, "application/json", response);
+    });
+    server.addHandler(compartmentLayoutHandler);
 
     AsyncCallbackJsonWebHandler *compartmentUpdateHandler = new AsyncCallbackJsonWebHandler("/api/compartments/update", [](AsyncWebServerRequest *request, JsonVariant &json) {
         StateGuard guard;
@@ -372,7 +431,8 @@ void setup() {
             o["studentName"] = r.studentName;
             o["regNumber"] = r.regNumber;
             o["compartmentId"] = r.compartmentId;
-            o["compartmentName"] = r.compartmentName;
+            Compartment *currentBox = r.isCompleted ? nullptr : compartmentMgr.getCompartmentById(r.compartmentId);
+            o["compartmentName"] = currentBox ? currentBox->displayName : r.compartmentName;
             o["rfidUid"] = r.rfidUid;
             o["submissionTime"] = r.submissionTimestamp;
             o["collectionTime"] = r.collectionTimestamp;

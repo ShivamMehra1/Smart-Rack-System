@@ -25,6 +25,7 @@ An ESP32 DevKit V1 project for assigning RFID cards to storage compartments, con
 - Starts a collection when a student taps a card that has an assigned compartment. Collection must be confirmed from the dashboard or the physical confirmation button.
 - Sends configurable submission and collection email receipts to the email address stored in that student's profile.
 - Shows rack status, compartments, students, activity history, email configuration, and device health in the dashboard.
+- Lets an administrator set the compartment row and column counts and choose row/column labels (`101`, `102`, `201`…) or letter/number labels (`A1`, `A2`, `B1`…).
 - Provides dashboard controls to delete student profiles and clean up completed activity history.
 - Saves student records, rack settings, assignment history, and email logs in LittleFS.
 - Uses WebSocket updates for dashboard events, with periodic status refresh as a fallback.
@@ -124,6 +125,10 @@ The `data/` folder must sit beside `smart_rack_system.ino`.
 5. Wait for the upload to complete, then reset the ESP32 and open Serial Monitor at 115200 baud.
 
 Uploading a new LittleFS image can replace files stored there, including student records and saved settings. Back up any needed records before uploading the filesystem again. To update only the dashboard, the `data/` folder is the filesystem image source; to update firmware behavior, use the normal Arduino **Upload** button too.
+
+## Customize the compartment rack
+
+Open the dashboard’s **Compartments** page and choose **Rack layout**. Set the number of rows and columns (up to 100 total compartments), select either row/column numbers such as `101`, `102`, `201` or letter/number labels such as `A1`, `A2`, `B1`, and save. The dashboard previews the labels before saving. Existing student profiles and completed history are kept. A smaller layout is rejected if it would remove an occupied or maintenance compartment. Apply firmware changes with Arduino **Upload** and dashboard changes with **Upload LittleFS**.
 
 ## Start and open the dashboard
 

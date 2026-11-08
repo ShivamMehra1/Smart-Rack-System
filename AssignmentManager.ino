@@ -129,6 +129,7 @@ bool AssignmentManager::confirmCollection() {
     for (auto &rec : history) {
         if (!rec.isCompleted && rec.compartmentId == pendingCollectionBoxId && rec.studentId == pendingCollectionStudentId) {
             rec.isCompleted = true;
+            rec.compartmentName = boxName;
             rec.collectionTimestamp = collectionTime;
             break;
         }
