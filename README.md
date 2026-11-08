@@ -25,6 +25,7 @@ An ESP32 DevKit V1 project for assigning RFID cards to storage compartments, con
 - Starts a collection when a student taps a card that has an assigned compartment. Collection must be confirmed from the dashboard or the physical confirmation button.
 - Sends configurable submission and collection email receipts to the email address stored in that student's profile.
 - Shows rack status, compartments, students, activity history, email configuration, and device health in the dashboard.
+- Provides dashboard controls to delete student profiles and clean up completed activity history.
 - Saves student records, rack settings, assignment history, and email logs in LittleFS.
 - Uses WebSocket updates for dashboard events, with periodic status refresh as a fallback.
 
@@ -78,6 +79,7 @@ smart_rack_system/
 ├── Config.h                    Pins, limits, and access-point defaults
 ├── Models.h                    Shared application data structures
 ├── data/                       Web dashboard files uploaded to LittleFS
+│   ├── admin-tools.js          Student/history cleanup controls
 └── docs/images/                README dashboard previews
 ```
 
@@ -160,6 +162,12 @@ The student taps their enrolled card. If they do not currently have a bag assign
 3. Confirmation releases the compartment and records the collection time. If enabled, a collection receipt is queued for the student's saved email address.
 
 Pending collection confirmation expires after about **20 seconds**. Confirm during that interval. Email delivery is asynchronous, so the confirmation page can respond before the SMTP transaction completes; check the Email page's delivery log for the final result.
+
+### Remove student profiles or old history
+
+- In **Students**, use a row's **Delete** button and confirm. The student's saved profile and associated history are removed. A student with a bag currently assigned cannot be deleted; collect the bag first.
+- In **Activity**, use **Clear completed history** and confirm. This removes completed records but keeps active assignments and their records so current bags remain manageable.
+- These actions permanently change the LittleFS records. The browser asks for confirmation before sending either request.
 
 ## Email setup
 

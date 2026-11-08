@@ -18,6 +18,7 @@ public:
     bool updateStudent(const Student &s);
     bool replaceCard(const String &studentId, const String &newUid);
     bool setStatus(const String &studentId, bool active);
+    bool deleteByUid(const String &uid);
     int getTotalStudents() { return students.size(); }
 };
 

@@ -161,6 +161,61 @@ void AssignmentManager::cancelPendingCollection() {
     pendingCollectionStudentId = "";
 }
 
+bool AssignmentManager::removeStudentAndHistory(const String &uid, String &outError, int &httpStatus) {
+    Student *student = studentMgr.getByUid(uid);
+    if (!student) {
+        outError = "Student was not found.";
+        httpStatus = 404;
+        return false;
+    }
+
+    const String studentId = student->studentId;
+    if (compartmentMgr.getByStudentId(studentId) != nullptr) {
+        outError = "Collect the student's bag before deleting this profile.";
+        httpStatus = 409;
+        return false;
+    }
+
+    const std::vector<AssignmentRecord> previousHistory = history;
+    history.erase(std::remove_if(history.begin(), history.end(), [&studentId](const AssignmentRecord &record) {
+        return record.studentId == studentId;
+    }), history.end());
+
+    if (!StorageManager::saveAssignments(history)) {
+        history = previousHistory;
+        outError = "Could not save the updated activity history.";
+        httpStatus = 500;
+        return false;
+    }
+
+    if (!studentMgr.deleteByUid(uid)) {
+        history = previousHistory;
+        StorageManager::saveAssignments(history);
+        outError = "Could not save the updated student list.";
+        httpStatus = 500;
+        return false;
+    }
+
+    httpStatus = 200;
+    return true;
+}
+
+int AssignmentManager::clearCompletedHistory() {
+    const std::vector<AssignmentRecord> previousHistory = history;
+    const auto firstRemoved = std::remove_if(history.begin(), history.end(), [](const AssignmentRecord &record) {
+        return record.isCompleted;
+    });
+    const int removedCount = static_cast<int>(history.end() - firstRemoved);
+    if (removedCount == 0) return 0;
+
+    history.erase(firstRemoved, history.end());
+    if (!StorageManager::saveAssignments(history)) {
+        history = previousHistory;
+        return -1;
+    }
+    return removedCount;
+}
+
 void AssignmentManager::loop() {
     if (feedbackPin >= 0 && (long)(millis() - feedbackOffAt) >= 0) {
         digitalWrite(feedbackPin, LOW);

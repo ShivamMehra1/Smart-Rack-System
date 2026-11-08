@@ -36,6 +36,8 @@ public:
     bool handleCardTap(const String &uid, String &outMessage, JsonObject outEventData);
     bool confirmCollection();
     void cancelPendingCollection();
+    bool removeStudentAndHistory(const String &uid, String &outError, int &httpStatus);
+    int clearCompletedHistory();
 
     std::vector<AssignmentRecord>& getHistory() { return history; }
     int getSubmissionsTodayCount();

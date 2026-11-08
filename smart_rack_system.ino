@@ -336,6 +336,31 @@ void setup() {
     });
     server.addHandler(studentStatusHandler);
 
+    AsyncCallbackJsonWebHandler *studentDeleteHandler = new AsyncCallbackJsonWebHandler("/api/students/delete", [](AsyncWebServerRequest *request, JsonVariant &json) {
+        StateGuard guard;
+        JsonObject obj = json.as<JsonObject>();
+        const String uid = obj["rfidUid"] | "";
+        if (uid.isEmpty()) {
+            request->send(400, "application/json", "{\"error\":\"RFID UID is required.\"}");
+            return;
+        }
+
+        String error;
+        int status = 500;
+        if (!assignmentMgr.removeStudentAndHistory(uid, error, status)) {
+            DynamicJsonDocument doc(256);
+            doc["error"] = error;
+            String response;
+            serializeJson(doc, response);
+            request->send(status, "application/json", response);
+            return;
+        }
+
+        broadcastWs("STUDENT_UPDATED", "Student removed");
+        request->send(200, "application/json", "{\"status\":\"deleted\"}");
+    });
+    server.addHandler(studentDeleteHandler);
+
     // History API
     server.on("/api/history", HTTP_GET, [](AsyncWebServerRequest *request) {
         StateGuard guard;
@@ -357,6 +382,24 @@ void setup() {
         serializeJson(doc, res);
         request->send(200, "application/json", res);
     });
+
+    AsyncCallbackJsonWebHandler *clearHistoryHandler = new AsyncCallbackJsonWebHandler("/api/history/clear-completed", [](AsyncWebServerRequest *request, JsonVariant &json) {
+        StateGuard guard;
+        const int removed = assignmentMgr.clearCompletedHistory();
+        if (removed < 0) {
+            request->send(500, "application/json", "{\"error\":\"Could not save the cleared activity history.\"}");
+            return;
+        }
+
+        broadcastWs("COLLECTION_CONFIRMED", "Completed history cleared");
+        DynamicJsonDocument doc(256);
+        doc["status"] = "cleared";
+        doc["removed"] = removed;
+        String response;
+        serializeJson(doc, response);
+        request->send(200, "application/json", response);
+    });
+    server.addHandler(clearHistoryHandler);
 
     // Confirm Collection API
     server.on("/api/confirm-collection", HTTP_POST, [](AsyncWebServerRequest *request) {

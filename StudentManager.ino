@@ -67,3 +67,17 @@ bool StudentManager::setStatus(const String &studentId, bool active) {
     return true;
 }
 
+bool StudentManager::deleteByUid(const String &uid) {
+    for (size_t i = 0; i < students.size(); ++i) {
+        if (!students[i].rfidUid.equalsIgnoreCase(uid)) continue;
+
+        Student deleted = students[i];
+        students.erase(students.begin() + i);
+        if (StorageManager::saveStudents(students)) return true;
+
+        students.insert(students.begin() + i, deleted);
+        return false;
+    }
+    return false;
+}
+
