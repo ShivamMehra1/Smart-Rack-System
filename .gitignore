@@ -1,0 +1,13 @@
+# ESP-IDF / Arduino build output
+build/
+.pio/
+out/
+
+# Local credentials and editor state
+secrets.h
+secrets.json
+.env
+.env.*
+.vscode/
+.DS_Store
+Thumbs.db

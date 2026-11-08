@@ -1,0 +1,194 @@
+/* Responsive and touch-friendly overrides for the Rackline dashboard. */
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+.app-shell,
+.main-column,
+.page-content,
+.page-stack,
+.overview-grid,
+.table-panel,
+.settings-panel {
+  min-width: 0;
+}
+
+.table-scroll {
+  max-width: 100%;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  -webkit-overflow-scrolling: touch;
+}
+
+button,
+a,
+input,
+select,
+textarea {
+  touch-action: manipulation;
+}
+
+@media (max-width: 850px) {
+  .page-content {
+    padding-right: clamp(16px, 3vw, 25px);
+    padding-left: clamp(16px, 3vw, 25px);
+  }
+
+  .compartment-layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .settings-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .page-heading {
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .page-heading .eyebrow {
+    font-size: 10px;
+  }
+
+  .page-heading h1 {
+    font-size: clamp(24px, 7vw, 30px);
+  }
+
+  .page-heading p {
+    max-width: none;
+    font-size: 12px;
+    line-height: 1.5;
+  }
+
+  .heading-count {
+    padding: 7px 10px;
+    font-size: 10px;
+  }
+
+  .panel-heading h2 {
+    font-size: 15px;
+  }
+
+  .stat-label {
+    font-size: 10px;
+  }
+
+  .stat-note {
+    font-size: 9px;
+  }
+
+  .rack-slot .slot-state,
+  .map-legend span {
+    font-size: 9px;
+  }
+
+  .filter-pills {
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 6px;
+  }
+
+  .filter-pills button {
+    min-height: 40px;
+    flex: 1 1 auto;
+    padding: 0 10px;
+    font-size: 10px;
+  }
+
+  .mobile-nav {
+    min-height: 70px;
+    padding-bottom: max(7px, env(safe-area-inset-bottom));
+  }
+
+  .mobile-nav button {
+    min-height: 48px;
+    gap: 5px;
+    font-size: 9px;
+  }
+
+  .mobile-nav button svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .main-column {
+    padding-bottom: max(78px, calc(70px + env(safe-area-inset-bottom)));
+  }
+
+  .enroll-button,
+  .button,
+  .text-button {
+    min-height: 40px;
+  }
+
+  input,
+  select,
+  textarea {
+    min-height: 44px;
+    font-size: 16px;
+  }
+
+  .table-scroll table {
+    min-width: 680px;
+  }
+
+  th {
+    font-size: 10px;
+    white-space: nowrap;
+  }
+
+  td {
+    font-size: 11px;
+  }
+
+  .enroll-modal {
+    max-height: calc(100dvh - 24px);
+    overflow-y: auto;
+  }
+
+  .toast-message {
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 380px) {
+  .topbar {
+    padding-right: 10px;
+    padding-left: 10px;
+  }
+
+  .topbar-actions {
+    gap: 5px;
+  }
+
+  .stats-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .mobile-nav button {
+    font-size: 8px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

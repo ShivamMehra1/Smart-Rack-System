@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="900" viewBox="0 0 1440 900" role="img" aria-labelledby="title desc">
+  <title id="title">Rackline email settings dashboard preview</title>
+  <desc id="desc">Illustrative dashboard email settings showing submission and collection receipt options and a sent collection email log.</desc>
+  <defs>
+    <linearGradient id="bg" x2="0" y2="1"><stop stop-color="#09131b"/><stop offset="1" stop-color="#0d1720"/></linearGradient>
+    <style>text{font-family:Inter,Segoe UI,Arial,sans-serif;fill:#e8eef7}.muted{fill:#91a0b4}.tiny{font-size:11px}.small{font-size:13px}.body{font-size:14px}.title{font-size:25px;font-weight:700}.card{fill:#111f2a;stroke:#243441;stroke-width:1}.line{stroke:#263743;stroke-width:1}.blue{fill:#76b7ff}.green{fill:#75d5a2}.label{font-size:12px;letter-spacing:.07em}</style>
+  </defs>
+  <rect width="1440" height="900" fill="url(#bg)"/><rect width="248" height="900" fill="#0b151d"/><path d="M248 0v900" stroke="#24333e"/>
+  <rect x="28" y="27" width="38" height="38" rx="11" fill="#347fe2"/><path d="M38 39h18v15H38zM42 35h10v4H42z" fill="none" stroke="#fff" stroke-width="2"/><text x="78" y="43" font-size="17" font-weight="700">Rackline</text><text x="78" y="60" class="tiny muted">SMART STORAGE</text>
+  <text x="28" y="112" class="tiny muted" letter-spacing="1.6">WORKSPACE</text>
+  <g fill="none" stroke="#91a0b4" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M38 142h16v14H38zM42 138h8v4h-8z"/><rect x="38" y="191" width="16" height="15" rx="3"/><path d="M43 196h6M43 201h6"/><circle cx="46" cy="245" r="8"/><path d="M43 245h6M46 242v6"/><path d="M38 285h16v16H38zM42 280h8v5h-8z"/><path d="M38 328h16v16H38zM41 333h10M41 338h7"/></g>
+  <text x="66" y="154" class="small muted" font-weight="600">Overview</text><text x="66" y="205" class="small muted" font-weight="600">Compartments</text><text x="66" y="250" class="small muted" font-weight="600">Students</text><text x="66" y="296" class="small muted" font-weight="600">Activity</text>
+  <rect x="17" y="310" width="214" height="43" rx="10" fill="#173557"/><rect x="18" y="319" width="3" height="25" rx="2" fill="#58a9ff"/><circle cx="46" cy="331" r="8" fill="none" stroke="#79b8ff" stroke-width="1.8"/><path d="M42 331h8M46 327v8" stroke="#79b8ff" stroke-width="1.6"/><text x="66" y="339" class="small blue" font-weight="700">Email</text><text x="66" y="384" class="small muted" font-weight="600">Device settings</text>
+  <rect x="17" y="818" width="214" height="56" rx="12" fill="#101e28" stroke="#243441"/><circle cx="43" cy="846" r="13" fill="#173557"/><text x="39" y="851" class="small blue" font-weight="700">E</text><text x="66" y="843" class="small" font-weight="700">ECE Lab</text><text x="66" y="861" class="tiny muted">Local rack dashboard</text>
+
+  <text x="286" y="55" class="tiny muted">RACKLINE / EMAIL</text><text x="286" y="94" class="title">Email notifications</text><text x="286" y="121" class="body muted">Configure student receipts and review delivery status.</text>
+  <rect x="286" y="148" width="1112" height="77" rx="14" fill="#10243a" stroke="#24486d"/><circle cx="317" cy="186" r="14" fill="#173557"/><path d="M310 186h14M317 179v14" stroke="#82beff" stroke-width="2"/><text x="343" y="181" class="body blue" font-weight="700">Customer-owned SMTP account</text><text x="343" y="202" class="small muted">The rack needs a connected internet Wi-Fi network to send email.</text>
+
+  <rect class="card" x="286" y="247" width="1112" height="291" rx="16"/>
+  <text x="315" y="285" font-size="17" font-weight="700">Email notifications setup</text><text x="315" y="308" class="small muted">Choose which automatic student receipts to send.</text>
+  <rect x="1277" y="268" width="88" height="31" rx="16" fill="#143b2b" stroke="#2e7752"/><circle cx="1347" cy="283" r="10" fill="#76d5a2"/><text x="1291" y="288" class="tiny green" font-weight="700">ENABLED</text>
+  <path class="line" d="M315 328h1054"/>
+  <rect x="316" y="355" width="20" height="20" rx="5" fill="#237b54"/><path d="M321 365l4 4 7-9" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><text x="351" y="370" class="body">Send email receipt upon <tspan font-weight="700">Bag Submission</tspan></text>
+  <rect x="316" y="399" width="20" height="20" rx="5" fill="#237b54"/><path d="M321 409l4 4 7-9" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><text x="351" y="414" class="body">Send confirmation upon <tspan font-weight="700">Bag Collection</tspan></text>
+  <text x="316" y="468" class="small muted">Collection receipts are queued after the collection is confirmed.</text>
+  <rect x="315" y="486" width="196" height="36" rx="9" fill="#8acb59"/><circle cx="337" cy="504" r="7" fill="none" stroke="#fff" stroke-width="1.5"/><path d="M334 504l2 2 4-5" fill="none" stroke="#fff" stroke-width="1.5"/><text x="353" y="509" class="small" font-weight="700">Save Configuration</text>
+
+  <rect class="card" x="286" y="560" width="1112" height="282" rx="16"/>
+  <text x="315" y="599" font-size="17" font-weight="700">Email delivery history</text><text x="315" y="621" class="small muted">Recent SMTP attempts and their current status.</text>
+  <rect x="315" y="647" width="1054" height="36" rx="7" fill="#0c1821"/><text x="332" y="670" class="tiny muted" letter-spacing="1">TYPE</text><text x="475" y="670" class="tiny muted" letter-spacing="1">STUDENT</text><text x="680" y="670" class="tiny muted" letter-spacing="1">RECIPIENT</text><text x="1006" y="670" class="tiny muted" letter-spacing="1">TIME</text><text x="1229" y="670" class="tiny muted" letter-spacing="1">RESULT</text>
+  <circle cx="339" cy="718" r="14" fill="#173557"/><path d="M333 718h12M339 712v12" stroke="#82beff" stroke-width="1.6"/><text x="362" y="722" class="small blue" font-weight="700">COLLECTION</text><text x="475" y="722" class="small">Student B</text><text x="680" y="722" class="small muted">student@example.edu</text><text x="1006" y="722" class="small muted">09:42</text><rect x="1219" y="703" width="108" height="27" rx="14" fill="#12352c"/><circle cx="1236" cy="716" r="4" fill="#56d392"/><text x="1247" y="721" class="tiny green" font-weight="700">SENT</text>
+  <path class="line" d="M315 745h1054"/>
+  <circle cx="339" cy="780" r="14" fill="#12352c"/><path d="M333 780h12M339 774v12" stroke="#75d5a2" stroke-width="1.6"/><text x="362" y="784" class="small green" font-weight="700">SUBMISSION</text><text x="475" y="784" class="small">Student A</text><text x="680" y="784" class="small muted">student@example.edu</text><text x="1006" y="784" class="small muted">09:30</text><rect x="1219" y="765" width="108" height="27" rx="14" fill="#12352c"/><circle cx="1236" cy="778" r="4" fill="#56d392"/><text x="1247" y="783" class="tiny green" font-weight="700">SENT</text>
+  <text x="286" y="878" class="tiny muted">Illustrative preview · example values only · never put SMTP passwords in shared screenshots</text>
+</svg>
